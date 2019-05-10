@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Chirp Messenger</title>
+    <meta name="description" content="Send and receive messages via audio">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="no">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="shortcut icon" href="data:image/x-icon;" type="image/x-icon">
+    <link rel="stylesheet" href="/index.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hyperapp/1.1.2/hyperapp.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.3.2/adapter.min.js"></script>
+    <script src="https://public.chirp.io/wasm/latest/chirp-connect.js"></script>
+    <script defer src="/index.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for(let registration of registrations) {
+            registration.unregister()
+          }
+        })
+      }
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
