@@ -49,7 +49,7 @@ const intro = (state, actions) =>
       h('a', { href: 'https://developers.chirp.io/docs/getting-started/wasm' }, 'Web Assembly SDK'),
       ' for transmitting data-over-sound.'
     ]),
-    h('img', { src: 'https://public.chirp.io/images/logos/devices.png' }),
+    h('img', { src: 'devices.png' }),
     h('p', {}, "Click below to get started. You'll need to grant microphone permissions to receive messages."),
     h('button', {
       onclick: (e) => {

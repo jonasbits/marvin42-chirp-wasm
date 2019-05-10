@@ -4,7 +4,7 @@
     "use strict";
     var t, E = void 0 !== (E = {
             locateFile: function(e, t) {
-                return "https://public.chirp.io/wasm/3.0.3/" + e
+                return "3.0.3/" + e
             }
         }) ? E : {},
         n = {};

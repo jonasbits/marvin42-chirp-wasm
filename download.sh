@@ -36,5 +36,6 @@ wget -c https://public.chirp.io/images/logos/devices.png
 
 wget -c https://messenger.chirp.io/index.html
 wget -c https://messenger.chirp.io/index.css
+wget -c https://messenger.chirp.io/manifest.json
 
 echo FINISH
