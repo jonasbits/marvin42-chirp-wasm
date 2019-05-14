@@ -23,6 +23,22 @@ const actions = {
   setState: state => ({ state }),
 }
 
+const hexString = '020000001900000019'
+
+// hexstring -> Uint8Array
+const fromHexString = hexString =>
+  new Uint8Array(hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+const goForward = fromHexString(hexString)
+const goLeft =  fromHexString('020000000100000019')
+const goRight = fromHexString('020000001900000001')
+const goBack =    fromHexString('020000001100000011')
+
+const payload = goForward
+// Uint8Array -> hexstring
+const toHexString = bytes =>
+  bytes.reduce((str, byte) => str + byte.toString(16).padStart(2, '0'), '');
+const hexString2 = toHexString(payload)
+
 // emoji support :)
 const encode = s => typeof TextEncoder === 'undefined' ? s : new TextEncoder('utf-8').encode(s)
 const decode = s => typeof TextDecoder === 'undefined' ? toAscii(s) : new TextDecoder('utf-8').decode(s)
@@ -54,7 +70,7 @@ const intro = (state, actions) =>
     h('button', {
       onclick: (e) => {
         Chirp({
-          key: '3b5CFdE1B45d12d2B1CD5BFBb',
+          key: 'E7Aad2030C2ff4bAB9fA3D6FE',
           onStateChanged: (previous, current) => actions.setState(current),
           onReceiving: () => actions.setSpinner('visible'),
           onReceived: data => {
@@ -77,26 +93,76 @@ const main = (state, actions) =>
   h('main', {}, [
     h('h3', {}, state.text),
     h('p', {}, 'Enter your message below.'),
-    h('input', {
+//forward
+    h('button', {
+      id: 'goF',
+      disabled: state.state === 'Receiving',
       onkeyup: e => {
         e.preventDefault()
-        if (e.keyCode === 13)
-          document.getElementById('send').click()
+        if (e.keyCode === 119 || e.keyCode === 87) // w/W
+           document.getElementById('goF').click()
       },
-      oninput: e => actions.setInput(e.target.value),
-      value: state.input
-    }),
-    h('button', {
-      id: 'send',
-      disabled: state.state === 'Receiving',
       onclick: (e) => {
         try {
-          sdk.send(encode(state.input))
+          sdk.send(goForward)
         } catch (err) {
           window.alert(err)
         }
+      }
+    }, 'FORWARD'),
+//begin div
+h('div', {}, [
+    h('button', {
+      id: 'goL',
+      disabled: state.state === 'Receiving',
+      onkeyup: e => {
+        e.preventDefault()
+        if (e.keyCode === 97 || e.keyCode === 65) // a/A
+          document.getElementById('goL').click()
       },
-    }, 'SEND'),
+      onclick: (e) => {
+        try {
+          sdk.send(goLeft)
+        } catch (err) {
+          window.alert(err)
+        }
+      }
+    }, 'LEFT'),
+//goRight
+    h('button', {
+      id: 'goR',
+      disabled: state.state === 'Receiving',
+      onkeyup: e => {
+        e.preventDefault()
+        if (e.keyCode === 100 || e.keyCode === 68) //forward arrow and W/w
+          document.getElementById('goR').click()
+      },
+      onclick: (e) => {
+        try {
+          sdk.send(goRight)
+        } catch (err) {
+          window.alert(err)
+        }
+      }
+    }, 'RIGHT')
+]), //end div
+//back
+    h('button', {
+      id: 'goB',
+      disabled: state.state === 'Receiving',
+      onkeyup: e => {
+        e.preventDefault()
+        if (e.keyCode === 115 || e.keyCode === 83) //forward arrow and W/w
+          document.getElementById('goB').click()
+      },
+      onclick: (e) => {
+        try {
+          sdk.send(goBack)
+        } catch (err) {
+          window.alert(err)
+        }
+      }
+    }, 'BACK'),
     footer,
     h('div', { class: 'spinner', style: { visibility: state.spinner } })
   ])
