@@ -23,15 +23,16 @@ const actions = {
   setState: state => ({ state }),
 }
 
-const hexString = '020000001900000019'
+const hexString = '031919'
 
 // hexstring -> Uint8Array
 const fromHexString = hexString =>
   new Uint8Array(hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
 const goForward = fromHexString(hexString)
-const goLeft =  fromHexString('020000000100000019')
-const goRight = fromHexString('020000001900000001')
-const goBack =    fromHexString('020000001100000011')
+const goLeft =  fromHexString('030019')
+const goRight = fromHexString('031901')
+const goBack =  fromHexString('031111')
+const goNot =   fromHexString('04')
 
 const payload = goForward
 // Uint8Array -> hexstring
@@ -163,6 +164,23 @@ h('div', {}, [
         }
       }
     }, 'BACK'),
+  //stop
+    h('button', {
+      id: 'goN',
+      disabled: state.state === 'Receiving',
+      onkeyup: e => {
+        e.preventDefault()
+        if (e.keyCode === 1115 || e.keyCode === 1183) //stop could be q/Q
+          document.getElementById('goN').click()
+      },
+      onclick: (e) => {
+        try {
+          sdk.send(goNot)
+        } catch (err) {
+          window.alert(err)
+        }
+      }
+    }, 'STOP'),
     footer,
     h('div', { class: 'spinner', style: { visibility: state.spinner } })
   ])
