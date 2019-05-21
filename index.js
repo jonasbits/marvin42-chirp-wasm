@@ -30,7 +30,7 @@ const fromHexString = hexString =>
   new Uint8Array(hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
 const goForward = fromHexString(hexString)
 const goLeft =  fromHexString('030019')
-const goRight = fromHexString('031901')
+const goRight = fromHexString('031900')
 const goBack =  fromHexString('031111')
 const goNot =   fromHexString('04')
 
