@@ -31,7 +31,7 @@ const fromHexString = hexString =>
 const goForward = fromHexString(hexString)
 const goLeft =  fromHexString('030019')
 const goRight = fromHexString('031900')
-const goBack =  fromHexString('031111')
+const goBack =  fromHexString('03E7E7')
 const goNot =   fromHexString('04')
 
 const payload = goForward
