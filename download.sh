@@ -38,4 +38,7 @@ wget -c https://messenger.chirp.io/index.html
 wget -c https://messenger.chirp.io/index.css
 wget -c https://messenger.chirp.io/manifest.json
 
+wget -c https://messenger.chirp.io/icons/android-chrome-192x192.png
+wget -c https://messenger.chirp.io/icons/android-chrome-512x512.png
+
 echo FINISH
