@@ -1,0 +1,140 @@
+<html lang='en'>
+<head>
+ <title>marvin42circle</title>
+ 
+ <!-- place this in a head section -->
+ <link rel="apple-touch-icon" href="touch-icon-iphone.png">
+ <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad.png">
+ <link rel="apple-touch-icon" sizes="180x180" href="touch-icon-iphone-retina.png">
+ <link rel="apple-touch-icon" sizes="167x167" href="touch-icon-ipad-retina.png">
+ 
+ <!-- place this in a head section -->
+ <meta name="apple-mobile-web-app-capable" content="yes" />
+ <link href="/apple_splash_2048.png" sizes="2048x2732" rel="apple-touch-startup-image" />
+ <link href="/apple_splash_1668.png" sizes="1668x2224" rel="apple-touch-startup-image" />
+ <link href="/apple_splash_1536.png" sizes="1536x2048" rel="apple-touch-startup-image" />
+ <link href="/apple_splash_1125.png" sizes="1125x2436" rel="apple-touch-startup-image" />
+ <link href="/apple_splash_1242.png" sizes="1242x2208" rel="apple-touch-startup-image" />
+ <link href="/apple_splash_750.png" sizes="750x1334" rel="apple-touch-startup-image" />
+ <link href="/apple_splash_640.png" sizes="640x1136" rel="apple-touch-startup-image" />
+
+<!-- detect iOS -->
+<script>
+// Detects if device is on iOS 
+const isIos = () => {
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  return /iphone|ipad|ipod/.test( userAgent );
+}
+// Detects if device is in standalone mode
+const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+
+// Checks if should display install popup notification:
+if (isIos() && !isInStandaloneMode()) {
+  //this.setState({ showInstallMessage: true });
+  //notImplimented yet
+}
+</script>
+ 
+</head>
+<body onload="startup()" onresize="resize_canvas()">
+ <canvas id="myCanvas" style=''></canvas>
+	
+<script type="text/javascript">
+var radius = 1;
+function resize_canvas(){
+ var c = document.getElementById("myCanvas");
+ c.width=document.body.clientWidth - 20;
+ c.height=document.body.clientHeight - 20;
+ var ctx = c.getContext("2d");
+ var myWidth = c.width; //clientWidth;
+ var myHeight = c.height; //clientHeight;
+ var x = (myWidth/2);
+ var y = (myHeight/2);
+ if (x < y) {
+ 	radius = (myWidth/2) - 20;
+ 	}
+ else 
+ 	{
+ 	radius = (myHeight/2) - 20;
+ }
+ console.log( myWidth + ' ' + x + ' ' + y + ' ' + radius );
+ ctx.font = "20px Georgia";
+ ctx.textAlign = "center";
+ 
+ ctx.beginPath();
+   ctx.arc(x, y, radius, 0, 2 * Math.PI);
+ ctx.stroke();
+ //stopArea circle
+ ctx.strokeText("Stop", x, y);
+ ctx.beginPath();
+   ctx.arc(x, y, radius*0.3, 0, 2 * Math.PI);
+ ctx.stroke();
+ //topForward
+ ctx.strokeText("Forward", x, y-radius);
+ ctx.beginPath();
+   ctx.arc(x, y-radius, radius*0.2, 0, 2 * Math.PI);
+ ctx.stroke();
+ //backward
+ ctx.strokeText("Backward", x, y+radius);
+ ctx.beginPath();
+   ctx.arc(x, y+radius, radius*0.2, 0, 2 * Math.PI);
+ ctx.stroke();
+ //left
+ ctx.strokeText("Left", x-radius, y);
+ ctx.beginPath();
+   ctx.arc(x-radius, y, radius*0.2, 0, 2 * Math.PI);
+ ctx.stroke();
+ //right
+ ctx.strokeText("Right", x+radius, y);
+ ctx.beginPath();
+   ctx.arc(x+radius, y, radius*0.2, 0, 2 * Math.PI);
+ ctx.stroke();
+
+} //end function
+</script>
+
+<script>
+ resize_canvas(); //run Once
+</script>
+
+<script>
+function startup() {
+  var el = document.getElementById("myCanvas");
+  el.addEventListener("touchstart", handleStart, false);
+  el.addEventListener("touchend", handleEnd, false);
+  el.addEventListener("touchcancel", handleCancel, false);
+  el.addEventListener("touchmove", handleMove, false);
+  console.log("initialized.");
+}
+function handleStart(evt){
+ console.log("touchstart.");
+ console.log( evt.changedTouches[0].pageX );
+ var c = document.getElementById("myCanvas");
+ var ctx = c.getContext("2d");
+ ctx.beginPath();
+  ctx.arc(evt.changedTouches[0].pageX, evt.changedTouches[0].pageY, radius*0.1, 0, 2 * Math.PI);
+ ctx.stroke();
+ 
+}
+function handleEnd(evt){
+ console.log("touchend.");
+}
+function handleCancel(evt){
+ console.log("touchcancel.");
+}
+function handleMove(evt){
+ console.log("touchmove.");
+}
+
+</script>
+
+<!-- 
+research
+https://www.netguru.com/codestories/few-tips-that-will-make-your-pwa-on-ios-feel-like-native
+https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
+https://www.w3schools.com/tags/canvas_arc.asp
+https://stackoverflow.com/questions/1664785/resize-html5-canvas-to-fit-window
+https://www.w3schools.com/tags/canvas_textalign.asp
+-->
+</body>
+</html>
