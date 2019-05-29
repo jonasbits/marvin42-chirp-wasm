@@ -4,7 +4,7 @@
   "description": "Send and receive messages via audio",
   "display": "standalone",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "/marvin42-chirp-wasm/",
   "theme_color": "white",
   "background_color": "white",
   "orientation": "portrait",
